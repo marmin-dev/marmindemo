@@ -25,8 +25,7 @@ public class TodoController {
 		String str = service.testService();
 		List<String> list = new ArrayList<>();
 		list.add(str);
-		ResponseDTO<String> dto = ResponseDTO.<String>builder().error("200")
-				.data(list).build();
+		ResponseDTO<String> dto = ResponseDTO.<String>builder().data(list).build();
 		return ResponseEntity.ok().body(dto);
 	}
 }
