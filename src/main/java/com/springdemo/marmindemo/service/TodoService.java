@@ -63,11 +63,9 @@ public class TodoService {
 			todo.setDone(entity.isDone());
 			//데이터베이스에 새 값을 저장한다
 			repository.save(todo);
-			
-			
 		});
 		return retrieve(entity.getUserId());
-	}
+	} 
 	public List<TodoEntity> delete(final TodoEntity entity){
 		//저장할 엔티티가 유효한지 확인한다
 		validate(entity);
