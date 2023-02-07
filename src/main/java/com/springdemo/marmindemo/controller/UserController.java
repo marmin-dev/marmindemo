@@ -3,6 +3,8 @@ package com.springdemo.marmindemo.controller;
 import com.springdemo.marmindemo.security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +27,10 @@ public class UserController {
 
 	@Autowired
 	private TokenProvider tokenProvider;
-	
+
+
+	//bean으로 작성해도 됨
+	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	@PostMapping("/signup")
 	public ResponseEntity<?> registerUser(@RequestBody UserDTO userDto){
 		try {
@@ -35,7 +40,7 @@ public class UserController {
 			// 요청을 이용해 저장할 유저 만들기
 			UserEntity user = UserEntity.builder()
 					.username(userDto.getUsername())
-					.password(userDto.getPassword())
+					.password(passwordEncoder.encode(userDto.getPassword()))
 					.build();
 			//서비스를 이용해 리포지터리에 유저 저장
 			UserEntity registeredUser = userService.create(user);
@@ -54,7 +59,9 @@ public class UserController {
 	public ResponseEntity<?> authenticate(@RequestBody UserDTO userDto){
 		UserEntity user = userService.getByCredentials(
 				userDto.getUsername(),
-				userDto.getPassword());
+				userDto.getPassword(),
+				passwordEncoder)
+		;
 		
 		if(user != null) {
 			final String token = tokenProvider.create(user);
