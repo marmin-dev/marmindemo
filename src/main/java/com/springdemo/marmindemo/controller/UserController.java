@@ -62,7 +62,7 @@ public class UserController {
 				userDto.getPassword(),
 				passwordEncoder)
 		;
-		
+		System.out.println(userDto);
 		if(user != null) {
 			final String token = tokenProvider.create(user);
 			final UserDTO responseUserDto = UserDTO.builder()

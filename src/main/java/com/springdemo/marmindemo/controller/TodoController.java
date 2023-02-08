@@ -2,13 +2,14 @@ package com.springdemo.marmindemo.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
+
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.stereotype.Repository;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ import com.springdemo.marmindemo.service.TodoService;
 
 @RestController
 @RequestMapping("todo")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TodoController {
 	
 	//TodoService service = new TodoService();
@@ -72,7 +74,6 @@ public class TodoController {
 	}
 	@GetMapping
 	public ResponseEntity<?> retrieveTodoList(@AuthenticationPrincipal String userId){
-		String temporaryUserId = "temporary-user";
 		
 		//서비스 메서드의 retrieve 메서드를 사용하여 Todo리스트를 가져온다
 		List<TodoEntity> entities = service.retrieve(userId);
