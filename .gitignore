@@ -4,6 +4,8 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+**/src/main/resources/application-prod.yaml
+**/src/main/resources/application-dev.yaml
 
 ### STS ###
 .apt_generated
@@ -35,3 +37,11 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+
+
